@@ -1,16 +1,15 @@
-import { Status } from "@/lib/types/type"
+import { Status } from "@/lib/types/type";
 
-
-export interface IUserData{
-    username : string, 
-    token : string, 
+export interface IUserData {
+  username: string;
+  token: string;
 }
 
-export interface IRegisterData extends IUserData{
-  email : string
+export interface IRegisterData extends IUserData {
+  email: string;
 }
 
-export interface IInitialState{
-  user : IUserData, 
-  status : Status
+export interface IInitialState {
+  user: IUserData;
+  status: Status;
 }
