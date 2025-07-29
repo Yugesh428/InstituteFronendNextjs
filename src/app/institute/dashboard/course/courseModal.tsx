@@ -1,7 +1,13 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { fetchCategories } from "@/lib/store/institute/category/categorySlice";
+import { ICategoryAddData } from "@/lib/store/institute/category/categoryTypes";
+import {
+  addCategory,
+  fetchCategories,
+} from "@/lib/store/institute/category/categorySlice";
 import {
   createInstituteCourse,
   fetchInstituteCourse,
@@ -17,7 +23,7 @@ interface ICloseModal {
 const courseLevel = ["Begineer", "Intermediate", "Advance"];
 
 const CourseModal: React.FC<ICloseModal> = ({ closeModal }) => {
-  useAppSelector((store) => store.course);
+  const { courses } = useAppSelector((store) => store.course);
   const { data } = useAppSelector((store) => store.category);
   const dispatch = useAppDispatch();
   const { status } = useAppSelector((store) => store.category);
@@ -31,17 +37,19 @@ const CourseModal: React.FC<ICloseModal> = ({ closeModal }) => {
     courseThumbnail: null,
   });
   const handleCourseChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; // courseThumnail, "Thank you for post... "
     setCourseData({
       ...courseData,
-      [name]: value,
+      // @ts-ignore
+      [name]: name === "courseThumbnail" ? e.target.files[0] : value,
     });
   };
+
   const handleCourseSubmission = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await dispatch(createInstituteCourse(courseData));
+    dispatch(createInstituteCourse(courseData));
     if (status === Status.SUCCESS) {
       closeModal();
     }
@@ -166,15 +174,19 @@ const CourseModal: React.FC<ICloseModal> = ({ closeModal }) => {
               >
                 Course Category
               </label>
-              <select name="courseId" id="">
-                {data.length > 0 &&
-                  data.map((category) => {
-                    return (
-                      <option key={category.id} value={category.id}>
-                        {category.categoryName}
-                      </option>
-                    );
-                  })}
+              <select
+                name="categoryId"
+                onChange={handleCourseChange}
+                value={courseData.categoryId}
+                required
+                className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+              >
+                <option value="">-- Select Category --</option>
+                {data.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.categoryName}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -184,7 +196,7 @@ const CourseModal: React.FC<ICloseModal> = ({ closeModal }) => {
               >
                 Course Level
               </label>
-              <select name="courseId" id="">
+              <select onChange={handleCourseChange} name="courseLevel" id="">
                 {courseLevel.map((cl) => {
                   return (
                     <option key={cl} value={cl}>
@@ -203,7 +215,7 @@ const CourseModal: React.FC<ICloseModal> = ({ closeModal }) => {
               Course Description
             </label>
             <textarea
-              name="categoryDescription"
+              name="courseDescription"
               onChange={handleCourseChange}
               id="website_url"
               className="w-full mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500"

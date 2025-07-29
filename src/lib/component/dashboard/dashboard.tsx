@@ -4,7 +4,7 @@ function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="bg-gray-100 flex h-screen">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md">
+      <aside className="w-64 bg-white shadow-md flex flex-col">
         <div className="p-4 border-b">
           <div className="flex items-center">
             <img
@@ -32,11 +32,12 @@ function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
           </div>
         </div>
       </aside>
+
       {/* Main Content */}
       <main className="flex-1 p-6 bg-gray-100">
         <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
         <div className="mt-4 p-6 bg-white rounded-lg shadow-md">
-          <p className="text-gray-600">{children}</p>
+          <div className="text-gray-600">{children}</div>
         </div>
       </main>
     </div>

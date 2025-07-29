@@ -1,13 +1,9 @@
-import Dashboard from "@/lib/component/dashboard/dashboard"
+import Dashboard from "@/lib/component/dashboard/dashboard";
 
-
-function InstituteDashboardLayout({children}:Readonly<{children : React.ReactNode}>){
-    return(
-        <Dashboard>
-            {children}
-        </Dashboard>
-    )
+function InstituteDashboardLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return <Dashboard>{children}</Dashboard>;
 }
 
-
-export default InstituteDashboardLayout
+export default InstituteDashboardLayout;

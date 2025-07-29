@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 import { useAppDispatch } from "@/lib/store/hooks";
 import { useState } from "react"
@@ -5,7 +6,6 @@ import CourseModal from "./courseModal";
 
 
 function InstituteCourse(){
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const dispatch = useAppDispatch()
     const [isModalOpen,setIsModalOpen] = useState<boolean>(false); 
     const openModal = ()=>setIsModalOpen(true)

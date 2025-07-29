@@ -23,10 +23,11 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning={true}
       >
         <Providers>
           <Navbar />
-          <main>{children}</main>
+          <main className="pt-5">{children}</main>
         </Providers>
       </body>
     </html>
